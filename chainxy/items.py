@@ -9,6 +9,7 @@ from scrapy.item import Item, Field
 
 class ChainItem(Item):
     item_id = Field()
+    item_type = Field()
     name = Field()
     number = Field()
     location = Field()
@@ -18,6 +19,7 @@ class ChainItem(Item):
     size = Field()
     title_deep_number = Field()
     description = Field()
+    price = Field()
     date = Field()
     link = Field()
     photo = Field()

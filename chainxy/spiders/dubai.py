@@ -22,16 +22,26 @@ class DubaiSpider(scrapy.Spider):
     request_urls = ['https://qbfzmmnba6-1.algolianet.com/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20vanilla%20JavaScript%203.29.0%3BJS%20Helper%202.19.0&x-algolia-application-id=QBFZMMNBA6&x-algolia-api-key=$$api_key$$', 'https://qbfzmmnba6-1.algolianet.com/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20vanilla%20JavaScript%203.29.0%3BJS%20Helper%202.19.0&x-algolia-application-id=QBFZMMNBA6&x-algolia-api-key=$$api_key$$']
     base_url = "https://dubai.dubizzle.com"
 
-    params = [{"requests":[{"indexName":"property-for-rent-residential.com","params":"facets=%5B%22furnished%22%2C%22language%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&page=1&hitsPerPage=500&filters=(city.id%3D2)%20AND%20(categories.ids%3D1743)%20AND%20(listed_by.value%3A%22LA%22)&attributesToRetrieve=%5B%22_geoloc%22%2C%22360_tour%22%2C%22absolute_url%22%2C%22active%22%2C%22added%22%2C%22agent%22%2C%22amenities%22%2C%22bathrooms%22%2C%22bedrooms%22%2C%22building%22%2C%22categories%22%2C%22category_id%22%2C%22city%22%2C%22feed_id%22%2C%22furnished%22%2C%22highlighted_ad%22%2C%22id%22%2C%22landmarks%22%2C%22language%22%2C%22listed_by%22%2C%22name.en%22%2C%22neighborhoods%22%2C%22objectID%22%2C%22photo%22%2C%22photos_count%22%2C%22price%22%2C%22promoted%22%2C%22property_reference%22%2C%22rent_is_paid%22%2C%22size%22%2C%22uri%22%2C%22user_id%22%2C%22is_verified%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-rent-residential.com","params":"facets=%5B%22furnished%22%2C%22language%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1743)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(promoted%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-rent-residential.com","params":"facets=%5B%22furnished%22%2C%22language%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1743)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(featured_listing%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"}]}, {"requests":[{"indexName":"property-for-sale-residential.com","params":"facets=%5B%22language%22%2C%22is_verified%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&page=1&hitsPerPage=300&filters=(city.id%3D2)%20AND%20(categories.ids%3D1742)%20AND%20(listed_by.value%3A%22LA%22)&attributesToRetrieve=%5B%22_geoloc%22%2C%22360_tour%22%2C%22absolute_url%22%2C%22active%22%2C%22added%22%2C%22agent%22%2C%22amenities%22%2C%22bathrooms%22%2C%22bedrooms%22%2C%22building%22%2C%22categories%22%2C%22category_id%22%2C%22city%22%2C%22feed_id%22%2C%22furnished%22%2C%22highlighted_ad%22%2C%22id%22%2C%22landmarks%22%2C%22language%22%2C%22listed_by%22%2C%22name.en%22%2C%22neighborhoods%22%2C%22objectID%22%2C%22photo%22%2C%22photos_count%22%2C%22price%22%2C%22promoted%22%2C%22property_reference%22%2C%22rent_is_paid%22%2C%22size%22%2C%22uri%22%2C%22user_id%22%2C%22is_verified%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-sale-residential.com","params":"facets=%5B%22language%22%2C%22is_verified%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1742)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(promoted%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-sale-residential.com","params":"facets=%5B%22language%22%2C%22is_verified%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1742)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(featured_listing%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"}]}]
+    params = [{"requests":[{"indexName":"property-for-rent-residential.com","params":"facets=%5B%22furnished%22%2C%22language%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&page=$page$&hitsPerPage=25&filters=(city.id%3D2)%20AND%20(categories.ids%3D1743)%20AND%20(listed_by.value%3A%22LA%22)&attributesToRetrieve=%5B%22_geoloc%22%2C%22360_tour%22%2C%22absolute_url%22%2C%22active%22%2C%22added%22%2C%22agent%22%2C%22amenities%22%2C%22bathrooms%22%2C%22bedrooms%22%2C%22building%22%2C%22categories%22%2C%22category_id%22%2C%22city%22%2C%22feed_id%22%2C%22furnished%22%2C%22highlighted_ad%22%2C%22id%22%2C%22landmarks%22%2C%22language%22%2C%22listed_by%22%2C%22name.en%22%2C%22neighborhoods%22%2C%22objectID%22%2C%22photo%22%2C%22photos_count%22%2C%22price%22%2C%22promoted%22%2C%22property_reference%22%2C%22rent_is_paid%22%2C%22size%22%2C%22uri%22%2C%22user_id%22%2C%22is_verified%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-rent-residential.com","params":"facets=%5B%22furnished%22%2C%22language%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1743)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(promoted%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-rent-residential.com","params":"facets=%5B%22furnished%22%2C%22language%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1743)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(featured_listing%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"}]}, {"requests":[{"indexName":"property-for-sale-residential.com","params":"facets=%5B%22language%22%2C%22is_verified%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&page=$page$&hitsPerPage=25&filters=(city.id%3D2)%20AND%20(categories.ids%3D1742)%20AND%20(listed_by.value%3A%22LA%22)&attributesToRetrieve=%5B%22_geoloc%22%2C%22360_tour%22%2C%22absolute_url%22%2C%22active%22%2C%22added%22%2C%22agent%22%2C%22amenities%22%2C%22bathrooms%22%2C%22bedrooms%22%2C%22building%22%2C%22categories%22%2C%22category_id%22%2C%22city%22%2C%22feed_id%22%2C%22furnished%22%2C%22highlighted_ad%22%2C%22id%22%2C%22landmarks%22%2C%22language%22%2C%22listed_by%22%2C%22name.en%22%2C%22neighborhoods%22%2C%22objectID%22%2C%22photo%22%2C%22photos_count%22%2C%22price%22%2C%22promoted%22%2C%22property_reference%22%2C%22rent_is_paid%22%2C%22size%22%2C%22uri%22%2C%22user_id%22%2C%22is_verified%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-sale-residential.com","params":"facets=%5B%22language%22%2C%22is_verified%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1742)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(promoted%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"},{"indexName":"property-for-sale-residential.com","params":"facets=%5B%22language%22%2C%22is_verified%22%2C%22listed_by.value%22%2C%22agent.name.en%22%2C%22property_reference%22%5D&hitsPerPage=1000&filters=(city.id%3D2)%20AND%20(categories.ids%3D1742)%20AND%20(listed_by.value%3A%22LA%22)%20AND%20(featured_listing%3A%22true%22)&attributesToRetrieve=%5B%22objectID%22%5D&attributesToHighlight=%5B%5D"}]}]
 
 
     def parse(self, response):
         body = response.body
         api_key = body[body.find('"apiKey":"')+10: body.find('","locationIndex"')]
-        # pdb.set_trace()
-        yield Request(url=self.request_urls[0].replace('$$api_key$$', api_key), method='POST', body=json.dumps(self.params[0]), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list)
-        
-        yield Request(url=self.request_urls[1].replace('$$api_key$$', api_key), method='POST', body=json.dumps(self.params[1]), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list)
+        for index in range(1, 39):
+            
+            # pdb.set_trace()
+            param = self.params[0]
+            param["requests"][0]["params"]=param["requests"][0]["params"].replace('$page$', str(index))
+
+            yield Request(url=self.request_urls[0].replace('$$api_key$$', api_key), method='POST', body=json.dumps(param), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list, meta={'type': 'rent'}, dont_filter=True)
+            # break
+
+        for index in range(1, 16):
+            param = self.params[1]
+            param["requests"][0]["params"]=param["requests"][0]["params"].replace('$page$', str(index))
+            yield Request(url=self.request_urls[1].replace('$$api_key$$', api_key), method='POST', body=json.dumps(param), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list, meta={'type': 'sale'}, dont_filter=True)
+            # break
 
     def parse_list(self, response):
         data = json.loads(response.body)
@@ -46,8 +56,8 @@ class DubaiSpider(scrapy.Spider):
             except:
                 location = ', '.join(url['neighborhoods']['name']['en'])
 
-            yield Request(url=url['absolute_url']['en'], callback=self.parse_row, meta={'name': name, 'location': location, 'row': json.dumps(url)})
-            break
+            yield Request(url=url['absolute_url']['en'], callback=self.parse_row, meta={'name': name, 'location': location, 'row': json.dumps(url), 'type': response.meta['type']})
+            # break
 
     def parse_row(self, response):
         row = json.loads(response.meta['row'])
@@ -56,7 +66,9 @@ class DubaiSpider(scrapy.Spider):
         item['name'] = response.meta['name']        
         item['location'] = response.meta['location']
         item['item_id'] = row['id']
-        
+        item['item_type'] = response.meta['type']
+        item['price'] = row['price']
+
         try:
             item['building'] = row['building']['name']['en']
         except:
@@ -79,14 +91,9 @@ class DubaiSpider(scrapy.Spider):
         except:
             item['date'] = ''
 
-        item['link'] = response.xpath('//div[@class="report-ad"]//a/@href').extract_first() 
+        item['link'] = response.xpath('//div[@id="listing-controls"]//input/@value').extract_first()
 
-        if item['link'] == '' or item['link'] is None:
-            item['link'] = response.xpath('//div[@id="listing-controls"]//input/@value').extract_first()
-        else:
-            item['link'] = self.base_url + item['link']
-
-        item['photo'] = ' | '.join(response.xpath('//div[@class="new-property fotorama"]/img/@src').extract())
+        item['photo'] = ', '.join(response.xpath('//div[@class="new-property fotorama"]/img/@src').extract())
 
         try:
             imgstring = response.xpath('//img[@class="phone-num-img"]/@src').extract_first()
@@ -99,7 +106,7 @@ class DubaiSpider(scrapy.Spider):
             bg.paste(image,image)
 
             # pdb.set_trace()
-            item['number'] = pytesseract.image_to_string(bg)
+            item['number'] = pytesseract.image_to_string(bg).replace('B', '8').replace(' ', '')
         except:
             item['number'] = ''
 

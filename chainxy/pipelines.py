@@ -28,7 +28,7 @@ class ChainxyPipeline(object):
         file = open('%s_%s.csv' % (spider.name, datetime.datetime.strftime(datetime.datetime.now(),'%Y%m%d')), 'w+b')
         self.files[spider] = file
         self.exporter = CsvItemExporter(file)
-        self.exporter.fields_to_export = ["name","number","location","building","bedroom","bathroom","size","title_deep_number","description","date","link","photo"]
+        self.exporter.fields_to_export = ["name","number","item_type","location","building","bedroom","bathroom","size","title_deep_number","description","date","link","photo"]
         self.exporter.start_exporting()
 
     def spider_closed(self, spider):
@@ -53,11 +53,16 @@ class DatabasePipeline(object):
 
     
     def process_item(self, item, spider):
-        query = ("INSERT INTO listing (id, name, number, location, building, bedroom, bathroom, size, title_deep_number, description, date, link, photo ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
 
         try:
-            self.cursor.execute(query, (str(item["item_id"]), str(item["name"]),str(item["number"]),str(item["location"]),str(item["building"]),str(item["bedroom"]),str(item["bathroom"]),str(item["size"]),str(item["title_deep_number"]),str(item["description"]),str(item["date"]),str(item["link"]),str(item["photo"])))
+            query = ("INSERT INTO listing (id, name, number, item_type, location, building, bedroom, bathroom, size, price, title_deep_number, description, date, link, photo ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+
+            self.cursor.execute(query, (str(item["item_id"]), str(item["name"].encode('utf-8')),str(item["number"]),str(item["item_type"]),str(item["location"].encode('utf-8')),str(item["building"]),str(item["bedroom"]),str(item["bathroom"]),str(item["size"]), str(item["price"]),str(item["title_deep_number"]),str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"]),str(item["photo"])))
         except:
+            pdb.set_trace()
+            query = ("UPDATE listing SET name = %s, number= %s, item_type= %s, location= %s, building= %s, bedroom= %s, bathroom= %s, size= %s, price= %s, title_deep_number= %s, description=%s, date=%s, link= %s, photo= %s WHERE id = %s;")
+
+            self.cursor.execute(query, (str(item["name"]).encode('utf-8') ,str(item["number"]).encode('utf-8') ,str(item["item_type"]).encode('utf-8') ,str(item["location"]).encode('utf-8') ,str(item["building"]).encode('utf-8') ,str(item["bedroom"]).encode('utf-8') ,str(item["bathroom"]).encode('utf-8') ,str(item["size"]).encode('utf-8'), str(item["price"]).encode('utf-8'),str(item["title_deep_number"]).encode('utf-8') ,str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"].encode('utf-8')),str(item["photo"]), str(item["item_id"])))
             pass
 
         self.conn.commit()
