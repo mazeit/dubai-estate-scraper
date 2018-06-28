@@ -84,7 +84,7 @@ class DubaiSpider(scrapy.Spider):
             item['title_deep_number'] = ''
 
         try:
-            item['description'] = ' '.join(response.xpath('//span[@id="description-box"]/text()').extract()).strip()
+            item['description'] = ' '.join(response.xpath('//span[@id="description-box"]/text()').extract()).strip().replace('"', "'")
         except:
             item['description'] = ''
         try:
