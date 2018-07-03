@@ -64,7 +64,14 @@ class DubaiSpider(scrapy.Spider):
         item = ChainItem()
 
         # item['name'] = response.meta['name']
-        item['name'] = response.xpath('//a[@class="lister-name-link"]/span/text()').extract_first()
+        item['name'] = response.xpath('//a[@class="lister-name-link"]/span/text()').extract_first() or ""
+
+        try:
+            item['name'] = item['name'].encode('utf-8')
+        except:
+            # pdb.set_trace()
+            pass
+
         item['location'] = response.meta['location']
         item['item_id'] = row['id']
         item['item_type'] = response.meta['type']
@@ -79,12 +86,12 @@ class DubaiSpider(scrapy.Spider):
         item['bathroom'] = row['bathrooms']
         item['size'] = row['size']
         try:
-            item['title_deep_number'] = response.xpath('//div[@class="lister-info"]/strong/text()').extract_first()
+            item['title_deep_number'] = response.xpath('//div[@class="lister-info"]/strong/text()').extract_first() or ""
         except:
             item['title_deep_number'] = ''
 
         try:
-            item['description'] = ' '.join(response.xpath('//span[@id="description-box"]/text()').extract()).strip().replace('"', "'")
+            item['description'] = ' '.join(response.xpath('//span[@id="description-box"]/text()').extract()).strip().replace('"', "'").replace("'", '')
         except:
             item['description'] = ''
         try:
@@ -92,7 +99,7 @@ class DubaiSpider(scrapy.Spider):
         except:
             item['date'] = ''
 
-        item['link'] = response.xpath('//div[@id="listing-controls"]//input/@value').extract_first()
+        item['link'] = response.xpath('//div[@id="listing-controls"]//input/@value').extract_first() or ""
 
         item['photo'] = ', '.join(response.xpath('//div[@class="new-property fotorama"]/img/@src').extract())
 

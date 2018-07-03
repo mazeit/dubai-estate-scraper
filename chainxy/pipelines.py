@@ -58,12 +58,21 @@ class DatabasePipeline(object):
 
             self.cursor.execute(query % (str(item["item_type"]), str(item["item_id"]), str(item["name"].encode('utf-8')),str(item["number"]),str(item["item_type"]),str(item["location"].encode('utf-8')),str(item["building"]),str(item["bedroom"]),str(item["bathroom"]),str(item["size"]), str(item["price"]),str(item["title_deep_number"]),str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"]),str(item["photo"])))
         except:
-            query = ('UPDATE listing_%s SET name="%s", number="%s", item_type="%s", location="%s", building="%s", bedroom="%s", bathroom="%s", size="%s", price="%s", title_deep_number="%s", description="%s", date="%s", link="%s", photo="%s" WHERE id =%s;')
+            try:
+                query = ('UPDATE listing_%s SET name="%s", number="%s", item_type="%s", location="%s", building="%s", bedroom="%s", bathroom="%s", size="%s", price="%s", title_deep_number="%s", description="%s", date="%s", link="%s", photo="%s" WHERE id =%s;')
 
-            self.cursor.execute(query % (str(item["item_type"]), str(item["name"]).encode('utf-8') ,str(item["number"]).encode('utf-8') ,str(item["item_type"]).encode('utf-8') ,str(item["location"]).encode('utf-8') ,str(item["building"]).encode('utf-8') ,str(item["bedroom"]).encode('utf-8') ,str(item["bathroom"]).encode('utf-8') ,str(item["size"]).encode('utf-8'), str(item["price"]).encode('utf-8'),str(item["title_deep_number"]).encode('utf-8') ,str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"].encode('utf-8')),str(item["photo"]), str(item["item_id"])))
+                self.cursor.execute(query % (str(item["item_type"]), str(item["name"].encode('utf-8') or item['name']) ,str(item["number"]) ,str(item["item_type"].encode('utf-8')) ,str(item["location"].encode('utf-8')),str(item["building"].encode('utf-8')) ,str(item["bedroom"]) ,str(item["bathroom"]) ,str(item["size"]), str(item["price"]),str(item["title_deep_number"].encode('utf-8')) ,str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"].encode('utf-8')),str(item["photo"]), str(item["item_id"])))
+            except Exception as e:
+                print e
+                pass
+
+        try:
+            self.conn.commit()
+        except Exception as e:
             pass
+            # pdb.set_trace()
 
-        self.conn.commit()
+
         return item
 
     @classmethod
