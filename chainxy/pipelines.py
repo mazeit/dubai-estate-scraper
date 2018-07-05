@@ -56,13 +56,14 @@ class DatabasePipeline(object):
         try:
             query = ('INSERT INTO listing_%s (id, name, number, item_type, location, building, bedroom, bathroom, size, price, title_deep_number, description, date, link, photo ) VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")')
 
-            self.cursor.execute(query % (str(item["item_type"]), str(item["item_id"]), str(item["name"].encode('utf-8')),str(item["number"]),str(item["item_type"]),str(item["location"].encode('utf-8')),str(item["building"]),str(item["bedroom"]),str(item["bathroom"]),str(item["size"]), str(item["price"]),str(item["title_deep_number"]),str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"]),str(item["photo"])))
+            self.cursor.execute(query % (str(item["item_type"]), str(item["item_id"]), str(item["name"]),str(item["number"]),str(item["item_type"]),str(item["location"]),str(item["building"]),str(item["bedroom"]),str(item["bathroom"]),str(item["size"]), str(item["price"]),str(item["title_deep_number"]),str(item["description"]),str(item["date"]),str(item["link"]),str(item["photo"])))
         except:
             try:
                 query = ('UPDATE listing_%s SET name="%s", number="%s", item_type="%s", location="%s", building="%s", bedroom="%s", bathroom="%s", size="%s", price="%s", title_deep_number="%s", description="%s", date="%s", link="%s", photo="%s" WHERE id =%s;')
 
-                self.cursor.execute(query % (str(item["item_type"]), str(item["name"].encode('utf-8') or item['name']) ,str(item["number"]) ,str(item["item_type"].encode('utf-8')) ,str(item["location"].encode('utf-8')),str(item["building"].encode('utf-8')) ,str(item["bedroom"]) ,str(item["bathroom"]) ,str(item["size"]), str(item["price"]),str(item["title_deep_number"].encode('utf-8')) ,str(item["description"].encode('utf-8')),str(item["date"].encode('utf-8')),str(item["link"].encode('utf-8')),str(item["photo"]), str(item["item_id"])))
+                self.cursor.execute(query % (str(item["item_type"]), str(item["name"] or item['name']) ,str(item["number"]) ,str(item["item_type"]) ,str(item["location"]),str(item["building"]) ,str(item["bedroom"]) ,str(item["bathroom"]) ,str(item["size"]), str(item["price"]),str(item["title_deep_number"]) ,str(item["description"]),str(item["date"]),str(item["link"]),str(item["photo"]), str(item["item_id"])))
             except Exception as e:
+                # pdb.set_trace()
                 print e
                 pass
 
@@ -70,7 +71,7 @@ class DatabasePipeline(object):
             self.conn.commit()
         except Exception as e:
             pass
-            # pdb.set_trace()
+            pdb.set_trace()
 
 
         return item
