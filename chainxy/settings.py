@@ -77,8 +77,8 @@ DB_SETTINGS = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'chainxy.pipelines.ChainxyPipeline': 300,
-    # 'chainxy.pipelines.DatabasePipeline': 300,
+    # 'chainxy.pipelines.ChainxyPipeline': 300,
+    'chainxy.pipelines.DatabasePipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
