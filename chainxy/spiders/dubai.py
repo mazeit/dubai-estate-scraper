@@ -30,13 +30,13 @@ class DubaiSpider(scrapy.Spider):
         api_key = body[body.find('"apiKey":"')+10: body.find('","locationIndex"')]
 
         param = copy.deepcopy(self.params[0])
-        for index in range(1, 40):
+        for index in range(1, 50):
             param["requests"][0]["params"]=self.params[0]["requests"][0]["params"].replace('$page$', str(index))
 
             yield Request(url=self.request_urls[0].replace('$$api_key$$', api_key), method='POST', body=json.dumps(param), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list, meta={'type': 'rent'}, dont_filter=True)
 
         param = copy.deepcopy(self.params[1])
-        for index in range(1, 17):
+        for index in range(1, 30):
             param["requests"][0]["params"]=self.params[1]["requests"][0]["params"].replace('$page$', str(index))
             yield Request(url=self.request_urls[1].replace('$$api_key$$', api_key), method='POST', body=json.dumps(param), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list, meta={'type': 'sale'}, dont_filter=True)
             # break
@@ -69,10 +69,18 @@ class DubaiSpider(scrapy.Spider):
         try:
             item['name'] = item['name'].encode('utf-8')
         except:
+            item['name'] = ""
             # pdb.set_trace()
             pass
 
         item['location'] = response.meta['location']
+
+        try:
+            item["location"] = item["location"].encode('utf-8')
+        except:
+            item["location"] = ''
+
+
         item['item_id'] = row['id']
         item['item_type'] = response.meta['type']
         item['price'] = row['price']
@@ -92,8 +100,10 @@ class DubaiSpider(scrapy.Spider):
 
         try:
             item['description'] = ' '.join(response.xpath('//span[@id="description-box"]/text()').extract()).strip().replace('"', "'").replace("'", '')
+            item['description'] = item['description'].encode('utf-8')
         except:
             item['description'] = ''
+
         try:
             item['date'] = response.xpath('//div[@class="posted-on fnt-12-grey"]/text()').extract_first().split(':')[1]
         except:
