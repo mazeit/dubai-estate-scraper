@@ -30,13 +30,13 @@ class DubaiSpider(scrapy.Spider):
         api_key = body[body.find('"apiKey":"')+10: body.find('","locationIndex"')]
 
         param = copy.deepcopy(self.params[0])
-        for index in range(1, 50):
+        for index in range(0, 50):
             param["requests"][0]["params"]=self.params[0]["requests"][0]["params"].replace('$page$', str(index))
 
             yield Request(url=self.request_urls[0].replace('$$api_key$$', api_key), method='POST', body=json.dumps(param), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list, meta={'type': 'rent'}, dont_filter=True)
 
         param = copy.deepcopy(self.params[1])
-        for index in range(1, 30):
+        for index in range(0, 30):
             param["requests"][0]["params"]=self.params[1]["requests"][0]["params"].replace('$page$', str(index))
             yield Request(url=self.request_urls[1].replace('$$api_key$$', api_key), method='POST', body=json.dumps(param), headers={'Content-Type':'application/x-www-form-urlencoded'} , callback=self.parse_list, meta={'type': 'sale'}, dont_filter=True)
             # break
@@ -59,6 +59,9 @@ class DubaiSpider(scrapy.Spider):
     def parse_row(self, response):
 
         print " ++++++++ url_list == " + str(len(self.url_list))
+
+        if '404' in response.url:
+            return
 
         row = json.loads(response.meta['row'])
         item = ChainItem()
@@ -108,6 +111,12 @@ class DubaiSpider(scrapy.Spider):
             item['date'] = response.xpath('//div[@class="posted-on fnt-12-grey"]/text()').extract_first().split(':')[1]
         except:
             item['date'] = ''
+
+        # if item['date'] == "" and 'rent' not in response.url:
+        #     pdb.set_trace()
+
+        # if 'Jul' in item['date'] and 'rent' not in response.url:
+        #     pdb.set_trace()
 
         item['link'] = response.xpath('//div[@id="listing-controls"]//input/@value').extract_first() or ""
 
