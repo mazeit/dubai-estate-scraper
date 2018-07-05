@@ -69,6 +69,9 @@ class DubaiSpider(scrapy.Spider):
         # item['name'] = response.meta['name']
         item['name'] = response.xpath('//a[@class="lister-name-link"]/span/text()').extract_first() or ""
 
+        if item['name'] is None or item['name'] == "":
+            item['name'] = response.xpath('//div[@class="lister-info"]/strong/text()').extract_first() or ""
+
         try:
             item['name'] = item['name'].encode('utf-8')
         except:
